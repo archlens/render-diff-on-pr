@@ -35,7 +35,7 @@ runs:
       uses: edunad/actions-image@v2.0.0
       with:
         path: "./diagrams/*.png"
-        GITHUB_TOKEN: ${{GITHUB_TOKEN}}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         title: "Diagrams"
 
     - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
