@@ -31,19 +31,10 @@ runs:
         mt-diagrams render --config-path ${{ inputs.config-path }}
       shell: bash
 
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v3
+    - uses: mshick/add-pr-comment@v2
       with:
-        name: diagram
-        path: "./diagrams/testproject-completeView.png"
-        retention-days: 5
-
-    - name: Upload diagrams
-      uses: edunad/actions-image@v2.0.0
-      with:
-        path: "./diagrams/testproject-completeView.png"
-        GITHUB_TOKEN: ${{ github.token }}
-        title: "Diagrams"
+        message: |
+          ![zeeguu-completeViewdiffView](https://user-images.githubusercontent.com/33089800/221556907-5baa568c-b3bc-4a8d-b698-d52cdf0897ba.png)
 
     - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
       shell: bash
