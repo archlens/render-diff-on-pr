@@ -8,6 +8,11 @@ inputs:
   imgur-secret-id:
     description: "The imgur secret key"
     required: true
+  render-diff:
+    description: "Should it render diff"
+    required: true
+    default: "false"
+
 runs:
   using: "composite"
   steps:
@@ -27,7 +32,11 @@ runs:
 
     - name: Run MT diagrams
       run: |
-        mt-diagrams render --config-path ${{ inputs.config-path }}
+        if [ ${{inputs.render-diff}} == "true" ] then
+          mt-diagrams render-diff --config-path ${{ inputs.config-path }}
+        else
+          mt-diagrams render --config-path ${{ inputs.config-path }}
+        fi
       shell: bash
 
     - uses: devicons/public-upload-to-imgur@v2.2.2

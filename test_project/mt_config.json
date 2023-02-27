@@ -3,7 +3,7 @@
     "name": "testproject",
     "rootFolder": "tp_src",
     "github": {
-        "url": "",
+        "url": "https://github.com/JesperRusbjerg/test_project",
         "branch": "main"
     },
     "saveLocation": "./diagrams/",
