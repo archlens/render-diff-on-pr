@@ -32,7 +32,7 @@ runs:
 
     - name: Run MT diagrams
       run: |
-        if [ ${{inputs.render-diff}} == "true" ] then
+        if [ "${{inputs.render-diff}}" == "true" ] then
           mt-diagrams render-diff --config-path ${{ inputs.config-path }}
         else
           mt-diagrams render --config-path ${{ inputs.config-path }}
