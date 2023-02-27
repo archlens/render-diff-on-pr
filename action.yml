@@ -37,7 +37,7 @@ runs:
       with:
         path: |
           diagrams/*.png
-        client_id: ${{secrets.IMGUR_CLIENT_ID}}
+        client_id: ${{ secrets.IMGUR_CLIENT_ID }}
 
     - uses: mshick/add-pr-comment@v2
       with:
