@@ -1,12 +1,13 @@
 name: Test MT action
 
 on:
-  - push
+  - pull_request
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
+    permissions:
+      pull-requests: write
     steps:
       - uses: actions/checkout@v3
 
