@@ -4,7 +4,7 @@ inputs:
   config-path:
     description: "Path to the config file"
     required: true
-    default: "./mt_config.json"
+    default: "mt_config.json"
   imgur-secret-id:
     description: "The imgur secret key"
     required: true
