@@ -2,9 +2,9 @@ name: "Hello World"
 description: "Greet someone"
 inputs:
   config-path: # id of input
-  description: "Path to the config file"
-  required: true
-  default: "./mt_config.json"
+    description: "Path to the config file"
+    required: true
+    default: "./mt_config.json"
 outputs:
   test:
     description: "test"
