@@ -31,25 +31,12 @@ runs:
         mt-diagrams render --config-path ${{ inputs.config-path }}
       shell: bash
 
-    - uses: mshick/add-pr-comment@v2
+    - name: Upload diagrams
+      uses: edunad/actions-image@v2.0.0
       with:
-        message: |
-          Regular **Markdown** here23232.
-
-          <div hidden>
-            ```
-            @startuml firstDiagram
-
-            Alice -> Bob: Hello
-            Bob -> Alice: Hi!
-                
-            @enduml
-            ```
-          </div>
-
-          ![](firstDiagram.svg)
-
-          Some more markdown.
+        path: "./diagrams/*.png"
+        GITHUB_TOKEN: ${{GITHUB_TOKEN}}
+        title: "Diagrams"
 
     - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
       shell: bash
