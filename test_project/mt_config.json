@@ -14,7 +14,7 @@
         },
         "coreView": {
             "packages": [
-                "core"
+                "tp_core"
             ],
             "ignorePackages": []
         }
