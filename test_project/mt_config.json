@@ -11,6 +11,12 @@
         "completeView": {
             "packages": [],
             "ignorePackages": []
+        },
+        "coreView": {
+            "packages": [
+                "core"
+            ],
+            "ignorePackages": []
         }
     }
 }

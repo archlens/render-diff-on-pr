@@ -8,10 +8,6 @@ inputs:
   imgur-secret-id:
     description: "The imgur secret key"
     required: true
-outputs:
-  test:
-    description: "test"
-    value: "test"
 runs:
   using: "composite"
   steps:
@@ -45,7 +41,7 @@ runs:
     - uses: mshick/add-pr-comment@v2
       with:
         message: |
-          ![Image](${{ fromJSON(steps.imgur_step.outputs.imgur_urls)[0] }})
+          ${{ join(map(fromJSON(steps.imgur_step.outputs.imgur_urls), (url) => '![Image](' + url + ')')) }}
 
     - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
       shell: bash
