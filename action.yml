@@ -1,7 +1,7 @@
-name: "Hello World"
-description: "Greet someone"
+name: "Upload MT diagram to PR"
+description: "This will create and upload mt diagrams to a PR"
 inputs:
-  config-path: # id of input
+  config-path:
     description: "Path to the config file"
     required: true
     default: "./mt_config.json"
@@ -58,7 +58,9 @@ runs:
           ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[4] }}
           ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[5] }}
           ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[6] }}
-          ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[7] }}
+          ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[8] }}
+          ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[9] }}
+          ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[10] }}
 
     - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
       shell: bash
