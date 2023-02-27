@@ -41,8 +41,7 @@ runs:
     - uses: mshick/add-pr-comment@v2
       with:
         message: |
-          ${{ each img_url in fromJSON(steps.imgur_step.outputs.imgur_urls) }}
-            ![Image](${img_url})
+          ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[0] }}
 
     - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
       shell: bash
