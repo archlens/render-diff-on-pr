@@ -29,6 +29,7 @@ runs:
     - name: Run MT diagrams
       run: |
         mt-diagrams render --config-path ${{ inputs.config-path }}
+        cd diagrams/
         ls -la
       shell: bash
 
