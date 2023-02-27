@@ -8,6 +8,10 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
+      contents: write
+      actions: read
+      checks: write
+
     steps:
       - uses: actions/checkout@v3
 
