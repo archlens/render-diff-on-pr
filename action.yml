@@ -5,6 +5,9 @@ inputs:
     description: "Path to the config file"
     required: true
     default: "./mt_config.json"
+  imgur-secret-id:
+    description: "The imgur secret key"
+    required: true
 outputs:
   test:
     description: "test"
@@ -37,7 +40,7 @@ runs:
       with:
         path: |
           diagrams/*.png
-        client_id: ${{ secrets.IMGUR_CLIENT_ID }}
+        client_id: ${{ inputs.imgur-secret-id }}
 
     - uses: mshick/add-pr-comment@v2
       with:
