@@ -1,6 +1,7 @@
 name: Test MT action
 
-on: [push]
+on:
+  - push
 
 jobs:
   deploy:
@@ -11,6 +12,8 @@ jobs:
 
       - id: mt-diagrams
         uses: Perlten/mt-gh-action@test
+        with:
+          config-path: "./test_project/mt_config.json"
 
       - run: echo mt output ${{ steps.mt-diagrams.outputs.test }}
         shell: bash
