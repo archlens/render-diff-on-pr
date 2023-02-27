@@ -31,9 +31,17 @@ runs:
         mt-diagrams render --config-path ${{ inputs.config-path }}
       shell: bash
 
+    - uses: devicons/public-upload-to-imgur@v2.2.2
+      name: Upload to imgur
+      id: imgur_step
+      with:
+        path: |
+          diagrams/*.png
+
     - uses: mshick/add-pr-comment@v2
       with:
         message: |
+          ![Image](fromJSON(steps.imgur_step.outputs.imgur_urls)[0])
           ![zeeguu-completeViewdiffView](https://user-images.githubusercontent.com/33089800/221556907-5baa568c-b3bc-4a8d-b698-d52cdf0897ba.png)
 
     - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
