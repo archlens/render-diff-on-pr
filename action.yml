@@ -31,61 +31,19 @@ runs:
         mt-diagrams render --config-path ${{ inputs.config-path }}
       shell: bash
 
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: diagram
+        path: "./diagrams/testproject-completeView.png"
+        retention-days: 5
+
     - name: Upload diagrams
       uses: edunad/actions-image@v2.0.0
       with:
         path: "./diagrams/testproject-completeView.png"
         GITHUB_TOKEN: ${{ github.token }}
         title: "Diagrams"
-
-    - name: Add comment with image
-      uses: actions/github-script@v4
-      with:
-        script: |
-          const fs = require('fs');
-          const path = require('path');
-          const imageData = fs.readFileSync(path.join(__dirname, 'diagrams', 'testproject-completeView.png'));
-          const imageBase64 = imageData.toString('base64');
-          const octokit = new github.GitHub(process.env.GITHUB_TOKEN);
-          const { data: comments } = await octokit.issues.listComments({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            issue_number: context.issue.number,
-          });
-          const existingComment = comments.find((comment) => comment.body.includes('comment content'));
-          if (existingComment) {
-            await octokit.issues.updateComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              comment_id: existingComment.id,
-              body: 'comment content',
-              mediaType: {
-                format: 'markdown',
-                previews: ['comfort-fade'],
-              },
-              headers: {
-                'content-type': 'text/plain',
-                'content-disposition': `inline; filename="image.png"`,
-              },
-              body: `![image](data:image/png;base64,${imageBase64})`,
-            });
-          } else {
-            await octokit.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number,
-              body: `![image](data:image/png;base64,${imageBase64})`,
-              mediaType: {
-                format: 'markdown',
-                previews: ['comfort-fade'],
-              },
-              headers: {
-                'content-type': 'text/plain',
-                'content-disposition': `inline; filename="image.png"`,
-              },
-            });
-          }
-        GITHUB_TOKEN: ${{ github.token }}
 
     - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
       shell: bash
