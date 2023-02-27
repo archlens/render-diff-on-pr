@@ -1,7 +1,7 @@
 name: "Hello World"
 description: "Greet someone"
 inputs:
-  config-file: # id of input
+  config-path: # id of input
     description: "Path to the config file"
     required: true
     default: "./mt_config.json"
@@ -12,7 +12,7 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - run: echo Running MT diagrams on the config ${{ inputs.config-file }}.
+    - run: echo Running MT diagrams on the config ${{ inputs.config-path }}.
       shell: bash
 
     - name: Set up Python
@@ -28,7 +28,7 @@ runs:
 
     - name: Run MT diagrams
       run: |
-        mt-diagrams render --config-path ${{ inputs.config-file }}
+        mt-diagrams render --config-path ${{ inputs.config-path }}
       shell: bash
 
     - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
