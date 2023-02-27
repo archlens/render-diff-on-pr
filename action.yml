@@ -29,14 +29,12 @@ runs:
     - name: Run MT diagrams
       run: |
         mt-diagrams render --config-path ${{ inputs.config-path }}
-        cd diagrams/
-        ls -la
       shell: bash
 
     - name: Upload diagrams
       uses: edunad/actions-image@v2.0.0
       with:
-        path: "./diagrams/*.png"
+        path: "./diagrams/testproject-completeView.png"
         GITHUB_TOKEN: ${{ github.token }}
         title: "Diagrams"
 
