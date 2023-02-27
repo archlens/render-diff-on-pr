@@ -9,10 +9,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - id: foo
+      - id: mt-diagrams
         uses: Perlten/mt-gh-action@test
-        with:
-          who-to-greet: "Mona the Octocat"
 
-      - run: echo random-number ${{ steps.foo.outputs.random-number }}
+      - run: echo mt output ${{ steps.mt-diagrams.outputs.test }}
         shell: bash
