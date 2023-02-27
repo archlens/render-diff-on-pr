@@ -29,6 +29,7 @@ runs:
     - name: Run MT diagrams
       run: |
         mt-diagrams render --config-path ${{ inputs.config-path }}
+        ls -la
       shell: bash
 
     - name: Upload diagrams
@@ -37,26 +38,6 @@ runs:
         path: "./diagrams/*.png"
         GITHUB_TOKEN: ${{ github.token }}
         title: "Diagrams"
-
-    - uses: mshick/add-pr-comment@v2
-      with:
-        message: |
-          Regular **Markdown** here23232.
-
-          <div hidden>
-            ```
-            @startuml firstDiagram
-
-            Alice -> Bob: Hello
-            Bob -> Alice: Hi!
-                
-            @enduml
-            ```
-          </div>
-
-          ![](firstDiagram.svg)
-
-          Some more markdown.
 
     - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
       shell: bash
