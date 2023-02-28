@@ -49,6 +49,11 @@ runs:
           diagrams/*.png
         client_id: ${{ inputs.imgur-secret-id }}
 
+    - name: Install required modules
+      run: |
+        npm install fs path form-data axios
+      shell: bash
+
     - name: Upload image
       uses: actions/github-script@v4
       with:
