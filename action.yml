@@ -74,7 +74,7 @@ runs:
           formData.append('file', fileData, { filename: fileName });
 
           // Upload image to GitHub's CDN
-          axios.post(`https://uploads.github.com/repos/${process.env.GITHUB_REPOSITORY}/issues/${prNumber}/attachments`, formData, {
+          axios.post(`https://uploads.github.com/repos/${process.env.GITHUB_REPOSITORY}/pr/${prNumber}/attachments`, formData, {
             headers: {
               'Content-Type': `multipart/form-data; boundary=${formData.getBoundary()}`,
               'Authorization': `token ${process.env.GITHUB_TOKEN}`,
