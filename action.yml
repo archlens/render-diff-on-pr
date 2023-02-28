@@ -52,7 +52,7 @@ runs:
     - uses: mshick/add-pr-comment@v2
       with:
         message: |
-          ![diagram](./diagrams/*.png)
+          ![diagram](./diagrams/testproject-completeViewdiffView.png)
 
     # - uses: mshick/add-pr-comment@v2
     #   with:
