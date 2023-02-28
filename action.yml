@@ -49,10 +49,36 @@ runs:
           diagrams/*.png
         client_id: ${{ inputs.imgur-secret-id }}
 
-    - uses: mshick/add-pr-comment@v2
+    - name: Upload image
+      uses: actions/github-script@v4
       with:
-        message: |
-          ![diagram](./diagrams/testproject-completeViewdiffView.png)
+        script: |
+          const fs = require('fs');
+          const path = require('path');
+          const FormData = require('form-data');
+          const axios = require('axios');
+          const prNumber = context.payload.pull_request.number;
+          const fileName = './diagrams/testproject-completeViewdiffView.png';
+          const filePath = path.join(process.env.GITHUB_WORKSPACE, fileName);
+
+          // Read image file
+          const fileData = fs.readFileSync(filePath);
+
+          // Create form data with image file
+          const formData = new FormData();
+          formData.append('file', fileData, { filename: fileName });
+
+          // Upload image to GitHub's CDN
+          axios.post(`https://uploads.github.com/repos/${process.env.GITHUB_REPOSITORY}/issues/${prNumber}/attachments`, formData, {
+            headers: {
+              'Content-Type': `multipart/form-data; boundary=${formData.getBoundary()}`,
+              'Authorization': `token ${process.env.GITHUB_TOKEN}`,
+            },
+          }).then(response => {
+            console.log(response.data);
+          }).catch(error => {
+            console.error(error);
+          });
 
     # - uses: mshick/add-pr-comment@v2
     #   with:
