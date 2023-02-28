@@ -38,6 +38,7 @@ runs:
         else
           mt-diagrams render --config-path ${{ inputs.config-path }}
         fi
+        cd diagrams && ls -la && cd ..
       shell: bash
 
     - uses: devicons/public-upload-to-imgur@v2.2.2
@@ -51,16 +52,21 @@ runs:
     - uses: mshick/add-pr-comment@v2
       with:
         message: |
-          ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[0] }}
-          ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[1] }}
-          ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[2] }}
-          ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[3] }}
-          ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[4] }}
-          ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[5] }}
-          ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[6] }}
-          ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[8] }}
-          ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[9] }}
-          ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[10] }}
+          ![diagram](./diagrams/*.png)
+
+    # - uses: mshick/add-pr-comment@v2
+    #   with:
+    #     message: |
+    #       ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[0] }}
+    #       ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[1] }}
+    #       ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[2] }}
+    #       ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[3] }}
+    #       ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[4] }}
+    #       ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[5] }}
+    #       ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[6] }}
+    #       ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[8] }}
+    #       ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[9] }}
+    #       ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[10] }}
 
     - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
       shell: bash
