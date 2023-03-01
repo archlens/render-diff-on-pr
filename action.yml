@@ -57,13 +57,12 @@ runs:
           result=$(curl -s -X POST -F "image=@$file" https://imgurproxy-app-service.azurewebsites.net/upload)
           results+=("$result")
         done
-        echo MARKDOWN=$result >> $GITHUB_OUTPUT
+        echo MARKDOWN="[$(echo $branches | sed 's/ /, /g')]" >> $GITHUB_OUTPUT
       shell: bash
 
     - uses: mshick/add-pr-comment@v2
       with:
         message: |
-          ${{ steps.imgur-proxy.outputs.MARKDOWN }}
           ${{ steps.imgur-proxy.outputs.MARKDOWN[0] }}
           ${{ steps.imgur-proxy.outputs.MARKDOWN[1] }}
           ${{ steps.imgur-proxy.outputs.MARKDOWN[2] }}
