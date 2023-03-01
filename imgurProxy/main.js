@@ -27,7 +27,7 @@ app.post('/upload', upload.single('image'), async (req, res) => {
         const imgurData = await imgurResponse.json();
         const imgurLink = imgurData.data.link
 
-        return res.send(`[diagram](${imgurLink})`)
+        return res.send(`![diagram](${imgurLink})`)
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'Internal Server Error' });
