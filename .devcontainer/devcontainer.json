@@ -1,0 +1,20 @@
+{
+    "name": "mh-gh-action",
+    "build": {
+        "dockerfile": "DockerFile",
+        "context": ".."
+    },
+    "runArgs": [
+        "--name",
+        "mt-gh-action"
+	],
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"cschleiden.vscode-github-actions",
+				"streetsidesoftware.code-spell-checker",
+				"me-dutour-mathieu.vscode-github-actions"
+			]
+		}
+	}
+}

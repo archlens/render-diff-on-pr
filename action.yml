@@ -1,0 +1,103 @@
+name: "Upload MT diagram to PR"
+description: "This will create and upload mt diagrams to a PR"
+inputs:
+  config-path:
+    description: "Path to the config file"
+    required: true
+    default: "mt_config.json"
+  imgur-secret-id:
+    description: "The imgur secret key"
+    required: true
+  render-diff:
+    description: "Should it render diff"
+    required: true
+    default: "false"
+
+runs:
+  using: "composite"
+  steps:
+    - run: echo Running MT diagrams on the config ${{ inputs.config-path }}.
+      shell: bash
+
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.10"
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install mt-diagrams
+      shell: bash
+
+    - name: Run MT diagrams
+      run: |
+        if [ "${{inputs.render-diff}}" == "true" ] 
+        then
+          mt-diagrams render-diff --config-path ${{ inputs.config-path }}
+        else
+          mt-diagrams render --config-path ${{ inputs.config-path }}
+        fi
+        cd diagrams && ls -la && cd ..
+      shell: bash
+
+    - uses: devicons/public-upload-to-imgur@v2.2.2
+      name: Upload to imgur
+      id: imgur_step
+      with:
+        path: |
+          diagrams/*.png
+        client_id: ${{ inputs.imgur-secret-id }}
+
+    # - name: Install required modules
+    #   run: |
+    #     npm install fs path form-data axios
+    #   shell: bash
+
+    # - name: Upload image
+    #   uses: actions/github-script@v4
+    #   with:
+    #     script: |
+    #       const fs = require('fs');
+    #       const path = require('path');
+    #       const FormData = require('form-data');
+    #       const axios = require('axios');
+    #       const prNumber = context.payload.pull_request.number;
+    #       const fileName = './diagrams/testproject-completeViewdiffView.png';
+    #       const filePath = path.join(process.env.GITHUB_WORKSPACE, fileName);
+
+    #       // Read image file
+    #       const fileData = fs.readFileSync(filePath);
+
+    #       // Create form data with image file
+    #       const formData = new FormData();
+    #       formData.append('file', fileData, { filename: fileName });
+
+    #       // Upload image to GitHub's CDN
+    #       axios.post(`https://uploads.github.com/repos/${process.env.GITHUB_REPOSITORY}/pr/${prNumber}/attachments`, formData, {
+    #         headers: {
+    #           'Content-Type': `multipart/form-data; boundary=${formData.getBoundary()}`,
+    #           'Authorization': `token ${process.env.GITHUB_TOKEN}`,
+    #         },
+    #       }).then(response => {
+    #         console.log(response.data);
+    #       }).catch(error => {
+    #         console.error(error);
+    #       });
+
+    - uses: mshick/add-pr-comment@v2
+      with:
+        message: |
+          ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[0] }}
+          ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[1] }}
+          ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[2] }}
+          ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[3] }}
+          ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[4] }}
+          ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[5] }}
+          ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[6] }}
+          ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[8] }}
+          ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[9] }}
+          ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[10] }}
+
+    - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
+      shell: bash
