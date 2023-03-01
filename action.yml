@@ -58,9 +58,9 @@ runs:
           results+=("$result")
         done
         echo $result
-        res = [$(echo $result | sed 's/ /, /g')]
+        res=[$(echo $result | sed 's/ /, /g')]
         echo $res
-        echo MARKDOWN=$res >> $GITHUB_OUTPUT
+        echo "MARKDOWN=$res" >> $GITHUB_OUTPUT
       shell: bash
 
     - uses: mshick/add-pr-comment@v2
