@@ -63,6 +63,7 @@ runs:
     - uses: mshick/add-pr-comment@v2
       with:
         message: |
+          ${{ steps.imgur-proxy.outputs.MARKDOWN }}
           ${{ steps.imgur-proxy.outputs.MARKDOWN[0] }}
           ${{ steps.imgur-proxy.outputs.MARKDOWN[1] }}
           ${{ steps.imgur-proxy.outputs.MARKDOWN[2] }}
