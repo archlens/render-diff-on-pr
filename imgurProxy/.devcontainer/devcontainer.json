@@ -1,0 +1,22 @@
+{
+	"name": "mh-gh-imgur-proxy",
+	"build": {
+		"dockerfile": "DockerFile",
+		"context": ".."
+	},
+	"runArgs": [
+		"--name",
+		"mt-gh-imgur-proxy"
+	],
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"cschleiden.vscode-github-actions",
+				"streetsidesoftware.code-spell-checker",
+				"me-dutour-mathieu.vscode-github-actions",
+				"hashicorp.terraform",
+				"ms-azuretools.vscode-azureterraform"
+			]
+		}
+	}
+}
