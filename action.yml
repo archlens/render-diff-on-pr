@@ -50,7 +50,7 @@ runs:
     #     client_id: ${{ inputs.imgur-secret-id }}
 
     - name: Upload to imgur proxy
-      id: imgur-proxy
+      id: imgur_proxy
       run: |
         results=()
         for file in diagrams/*.png; do
@@ -64,8 +64,8 @@ runs:
     - uses: mshick/add-pr-comment@v2
       with:
         message: |
-          ${{ fromJSON(steps.imgur-proxy.outputs.MARKDOWN)[0] }}
-          ${{ fromJSON(steps.imgur-proxy.outputs.MARKDOWN)[1] }}
+          ${{ fromJSON(steps.imgur_proxy.outputs.markdown)[0] }}
+          ${{ fromJSON(steps.imgur_proxy.outputs.markdown)[1] }}
 
     - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
       shell: bash
