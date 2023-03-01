@@ -49,55 +49,55 @@ runs:
           diagrams/*.png
         client_id: ${{ inputs.imgur-secret-id }}
 
-    - name: Install required modules
-      run: |
-        npm install fs path form-data axios
-      shell: bash
+    # - name: Install required modules
+    #   run: |
+    #     npm install fs path form-data axios
+    #   shell: bash
 
-    - name: Upload image
-      uses: actions/github-script@v4
-      with:
-        script: |
-          const fs = require('fs');
-          const path = require('path');
-          const FormData = require('form-data');
-          const axios = require('axios');
-          const prNumber = context.payload.pull_request.number;
-          const fileName = './diagrams/testproject-completeViewdiffView.png';
-          const filePath = path.join(process.env.GITHUB_WORKSPACE, fileName);
-
-          // Read image file
-          const fileData = fs.readFileSync(filePath);
-
-          // Create form data with image file
-          const formData = new FormData();
-          formData.append('file', fileData, { filename: fileName });
-
-          // Upload image to GitHub's CDN
-          axios.post(`https://uploads.github.com/repos/${process.env.GITHUB_REPOSITORY}/pr/${prNumber}/attachments`, formData, {
-            headers: {
-              'Content-Type': `multipart/form-data; boundary=${formData.getBoundary()}`,
-              'Authorization': `token ${process.env.GITHUB_TOKEN}`,
-            },
-          }).then(response => {
-            console.log(response.data);
-          }).catch(error => {
-            console.error(error);
-          });
-
-    # - uses: mshick/add-pr-comment@v2
+    # - name: Upload image
+    #   uses: actions/github-script@v4
     #   with:
-    #     message: |
-    #       ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[0] }}
-    #       ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[1] }}
-    #       ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[2] }}
-    #       ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[3] }}
-    #       ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[4] }}
-    #       ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[5] }}
-    #       ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[6] }}
-    #       ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[8] }}
-    #       ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[9] }}
-    #       ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[10] }}
+    #     script: |
+    #       const fs = require('fs');
+    #       const path = require('path');
+    #       const FormData = require('form-data');
+    #       const axios = require('axios');
+    #       const prNumber = context.payload.pull_request.number;
+    #       const fileName = './diagrams/testproject-completeViewdiffView.png';
+    #       const filePath = path.join(process.env.GITHUB_WORKSPACE, fileName);
+
+    #       // Read image file
+    #       const fileData = fs.readFileSync(filePath);
+
+    #       // Create form data with image file
+    #       const formData = new FormData();
+    #       formData.append('file', fileData, { filename: fileName });
+
+    #       // Upload image to GitHub's CDN
+    #       axios.post(`https://uploads.github.com/repos/${process.env.GITHUB_REPOSITORY}/pr/${prNumber}/attachments`, formData, {
+    #         headers: {
+    #           'Content-Type': `multipart/form-data; boundary=${formData.getBoundary()}`,
+    #           'Authorization': `token ${process.env.GITHUB_TOKEN}`,
+    #         },
+    #       }).then(response => {
+    #         console.log(response.data);
+    #       }).catch(error => {
+    #         console.error(error);
+    #       });
+
+    - uses: mshick/add-pr-comment@v2
+      with:
+        message: |
+          ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[0] }}
+          ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[1] }}
+          ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[2] }}
+          ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[3] }}
+          ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[4] }}
+          ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[5] }}
+          ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[6] }}
+          ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[8] }}
+          ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[9] }}
+          ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[10] }}
 
     - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
       shell: bash
