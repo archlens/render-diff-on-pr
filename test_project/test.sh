@@ -2,13 +2,13 @@
 
 # Declare an empty array to store the results
 results=()
-
-# Loop through all PNG files in the diagrams directory
-for file in diagrams/*.png; do
-  # Run the curl command and store the result in the array
-  result=$(curl -s -X POST -F "image=@$file" https://imgurproxy-app-service.azurewebsites.net/upload)
-  results+=("$result")
+for file in diagrams/*; do
+    result=$(curl -s -X POST -F "image=@$file" https://imgurproxy-app-service.azurewebsites.net/upload)
+    results+=("$result")
+    echo "test"
 done
-
-# Print the array of results
-printf '%s\n' "${results[@]}"
+echo ${results[@]}
+res=[$(echo ${results[@]} | sed 's/ /, /g')]
+echo $res
+# echo "MARKDOWN=$res" >> $GITHUB_OUTPUT
+# echo $GITHUB_OUTPUT

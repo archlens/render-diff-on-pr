@@ -57,8 +57,8 @@ runs:
           result=$(curl -s -X POST -F "image=@$file" https://imgurproxy-app-service.azurewebsites.net/upload)
           results+=("$result")
         done
-        echo $result
-        res=[$(echo $result | sed 's/ /, /g')]
+        echo $result[@]
+        res=[$(echo ${results[@]} | sed 's/ /, /g')]
         echo $res
         echo "MARKDOWN=$res" >> $GITHUB_OUTPUT
       shell: bash
