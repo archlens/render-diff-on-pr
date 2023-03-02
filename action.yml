@@ -61,7 +61,7 @@ runs:
           ${{ steps.imgur_proxy.outputs.MARKDOWN }}
 
     - uses: devicons/public-upload-to-imgur@v2.2.2
-      if: inputs.imgur-proxy == false
+      if: inputs.imgur-proxy != true
       name: Upload to imgur
       id: imgur_step
       with:
@@ -70,7 +70,7 @@ runs:
         client_id: ${{ inputs.imgur-secret-id }}
 
     - uses: mshick/add-pr-comment@v2
-      if: inputs.imgur-proxy == false
+      if: inputs.imgur-proxy != true
       with:
         message: |
           ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[0] }}
