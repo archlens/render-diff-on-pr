@@ -3,19 +3,15 @@ description: "This will create and upload mt diagrams to a PR"
 inputs:
   config-path:
     description: "Path to the config file"
-    required: true
     default: "mt_config.json"
   imgur-secret-id:
     description: "The imgur secret key"
-    required: true
   render-diff:
     description: "Should it render diff"
     required: true
-    default: "false"
   imgur-proxy:
     description: "Use imgur proxy"
     required: true
-    default: "true"
 
 runs:
   using: "composite"
