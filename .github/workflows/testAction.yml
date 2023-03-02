@@ -18,3 +18,4 @@ jobs:
           config-path: "./test_project/mt_config.json"
           render-diff: "true"
           imgur-proxy: "false"
+          imgur-secret-id: ${{ secrets.IMGUR_CLIENT_ID }}
