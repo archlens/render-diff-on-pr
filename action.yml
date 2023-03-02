@@ -12,6 +12,7 @@ inputs:
   imgur-proxy:
     description: "Use imgur proxy"
     required: true
+    default: false
 
 runs:
   using: "composite"
