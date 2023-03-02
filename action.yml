@@ -42,7 +42,7 @@ runs:
       shell: bash
 
     - name: Upload to imgur proxy
-      if: inputs.imgur-proxy == true
+      if: ${{ inputs.imgur-proxy == 'true' }}
       id: imgur_proxy
       run: |
         resultsStr=""
@@ -55,7 +55,7 @@ runs:
       shell: bash
 
     - uses: mshick/add-pr-comment@v2
-      if: inputs.imgur-proxy == true
+      if: ${{ inputs.imgur-proxy == 'true' }}
       with:
         message: |
           ${{ steps.imgur_proxy.outputs.MARKDOWN }}
