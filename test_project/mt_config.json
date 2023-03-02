@@ -9,7 +9,7 @@
     "saveLocation": "./diagrams/",
     "views": {
         "completeView": {
-            "packages": [api],
+            "packages": ["api"],
             "ignorePackages": []
         },
         "coreView": {
