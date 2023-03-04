@@ -11,10 +11,8 @@ const upload = multer();
 // Endpoint to handle image upload
 app.post('/upload', upload.single('image'), async (req, res) => {
     try {
-        const imgurApiKey = process.env.IMGUR_CLIENT_ID; // Replace with your Imgur API key
-        // Send image to Imgur API
+        const imgurApiKey = process.env.IMGUR_CLIENT_ID; 
         const form = new FormData();
-        // form.append('image', fs.createReadStream(req.file.buffer));
         form.append('image', req.file.buffer);
         const imgurResponse = await fetch('https://api.imgur.com/3/image', {
             method: 'POST',
