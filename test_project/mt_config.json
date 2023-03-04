@@ -1,0 +1,22 @@
+{
+    "$schema": "https://raw.githubusercontent.com/Perlten/MT-diagrams/master/config.schema.json",
+    "name": "testproject",
+    "rootFolder": "tp_src",
+    "github": {
+        "url": "https://github.com/JesperRusbjerg/test_project",
+        "branch": "main"
+    },
+    "saveLocation": "./diagrams/",
+    "views": {
+        "completeView": {
+            "packages": [],
+            "ignorePackages": []
+        },
+        "coreView": {
+            "packages": [
+                "tp_core"
+            ],
+            "ignorePackages": []
+        }
+    }
+}

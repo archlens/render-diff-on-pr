@@ -1,0 +1,19 @@
+name: Test MT action
+
+on:
+  - pull_request
+
+jobs:
+  upload-MT-diagrams:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - id: mt-diagrams
+        uses: Perlten/mt-gh-action@test
+        with:
+          config-path: "test_project/mt_config.json"
+          # imgur-secret-id: ${{ secrets.IMGUR_CLIENT_ID }}
