@@ -8,10 +8,7 @@ inputs:
     description: "The imgur secret key"
   render-diff:
     description: "Should it render diff"
-    required: true
-  imgur-proxy:
-    description: "Use imgur proxy"
-    required: true
+    default: "true"
 
 runs:
   using: "composite"
@@ -42,7 +39,7 @@ runs:
       shell: bash
 
     - name: Upload to imgur proxy
-      if: ${{ inputs.imgur-proxy == 'true' }}
+      if: ${{ inputs.imgur-secret-id == 'false' }}
       id: imgur_proxy
       run: |
         resultsStr=""
@@ -55,13 +52,13 @@ runs:
       shell: bash
 
     - uses: mshick/add-pr-comment@v2
-      if: ${{ inputs.imgur-proxy == 'true' }}
+      if: ${{ inputs.imgur-secret-id == 'false' }}
       with:
         message: |
           ${{ steps.imgur_proxy.outputs.MARKDOWN }}
 
     - uses: devicons/public-upload-to-imgur@v2.2.2
-      if: ${{ inputs.imgur-proxy == 'false' }}
+      if: ${{ inputs.imgur-secret-id == 'true' }}
       name: Upload to imgur
       id: imgur_step
       with:
@@ -70,7 +67,7 @@ runs:
         client_id: ${{ inputs.imgur-secret-id }}
 
     - uses: mshick/add-pr-comment@v2
-      if: ${{ inputs.imgur-proxy == 'false' }}
+      if: ${{ inputs.imgur-secret-id == 'true' }}
       with:
         message: |
           ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[0] }}
