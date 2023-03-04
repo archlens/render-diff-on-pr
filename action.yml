@@ -6,6 +6,7 @@ inputs:
     default: "mt_config.json"
   imgur-secret-id:
     description: "The imgur secret key"
+    default: "false"
   render-diff:
     description: "Should it render diff"
     default: "true"
@@ -58,7 +59,7 @@ runs:
           ${{ steps.imgur_proxy.outputs.MARKDOWN }}
 
     - uses: devicons/public-upload-to-imgur@v2.2.2
-      if: ${{ inputs.imgur-secret-id == 'true' }}
+      if: ${{ inputs.imgur-secret-id != 'false' }}
       name: Upload to imgur
       id: imgur_step
       with:
@@ -67,7 +68,7 @@ runs:
         client_id: ${{ inputs.imgur-secret-id }}
 
     - uses: mshick/add-pr-comment@v2
-      if: ${{ inputs.imgur-secret-id == 'true' }}
+      if: ${{ inputs.imgur-secret-id != 'false' }}
       with:
         message: |
           ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[0] }}
