@@ -28,7 +28,6 @@ variable "tenant_id" { type = string }
 variable "imgur_client_id" {
   type = string
 }
-
 variable "port" {
   type    = string
   default = "3000"
