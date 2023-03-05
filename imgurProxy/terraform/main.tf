@@ -1,4 +1,10 @@
 terraform {
+  cloud {
+    organization = "Perlt"
+    workspaces {
+      name = "mt-diagrams-imgurproxy"
+    }
+  }
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
@@ -8,13 +14,21 @@ terraform {
 }
 
 provider "azurerm" {
-  # Configuration options
   features {}
+  subscription_id = var.subscription_id
+  client_id       = var.client_id
+  client_secret   = var.client_secret
+  tenant_id       = var.tenant_id
 }
+variable "subscription_id" { type = string }
+variable "client_id" { type = string }
+variable "client_secret" { type = string }
+variable "tenant_id" { type = string }
 
 variable "imgur_client_id" {
   type = string
 }
+
 variable "port" {
   type    = string
   default = "3000"
@@ -43,8 +57,12 @@ resource "azurerm_linux_web_app" "main" {
   https_only = true
 
   app_settings = {
-    "PORT"            = var.port
-    "IMGUR_CLIENT_ID" = var.imgur_client_id
+    PORT                            = var.port
+    IMGUR_CLIENT_ID                 = var.imgur_client_id
+    DOCKER_REGISTRY_SERVER_USERNAME = ""
+    DOCKER_REGISTRY_SERVER_PASSWORD = ""
+    DOCKER_ENABLE_CI                = true
+    DOCKER_REGISTRY_SERVER_URL      = "https://index.docker.io/v1"
   }
   site_config {
     always_on = false

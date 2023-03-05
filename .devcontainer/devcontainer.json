@@ -13,7 +13,9 @@
 			"extensions": [
 				"cschleiden.vscode-github-actions",
 				"streetsidesoftware.code-spell-checker",
-				"me-dutour-mathieu.vscode-github-actions"
+				"me-dutour-mathieu.vscode-github-actions",
+				"hashicorp.terraform",
+				"ms-azuretools.vscode-azureterraform"
 			]
 		}
 	}
