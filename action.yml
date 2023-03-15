@@ -32,9 +32,9 @@ runs:
       run: |
         if [ "${{inputs.render-diff}}" == "true" ] 
         then
-          mt-diagrams render-diff --config-path ${{ inputs.config-path }}
+          MT_DEBUG="true" mt-diagrams render-diff --config-path ${{ inputs.config-path }}
         else
-          mt-diagrams render --config-path ${{ inputs.config-path }}
+          MT_DEBUG="true" mt-diagrams render --config-path ${{ inputs.config-path }}
         fi
         cd diagrams && ls -la && cd ..
       shell: bash
