@@ -1,5 +1,5 @@
-name: "Upload MT diagram to PR"
-description: "This will create and upload mt diagrams to a PR"
+name: "Upload Architectural Lens diagram to PR"
+description: "This will create and upload Architectural Lens diagrams to a PR"
 inputs:
   config-path:
     description: "Path to the config file"
@@ -14,7 +14,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - run: echo Running MT diagrams on the config ${{ inputs.config-path }}.
+    - run: echo Running Architectural Lens diagrams on the config ${{ inputs.config-path }}.
       shell: bash
 
     - name: Set up Python
@@ -25,16 +25,16 @@ runs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install mt-diagrams
+        pip install architectural-lens
       shell: bash
 
-    - name: Run MT diagrams
+    - name: Run Architectural Lens
       run: |
         if [ "${{inputs.render-diff}}" == "true" ] 
         then
-          MT_DEBUG="true" mt-diagrams render-diff --config-path ${{ inputs.config-path }}
+          MT_DEBUG="true" architectural-lens render-diff --config-path ${{ inputs.config-path }}
         else
-          MT_DEBUG="true" mt-diagrams render --config-path ${{ inputs.config-path }}
+          MT_DEBUG="true" architectural-lens render --config-path ${{ inputs.config-path }}
         fi
         cd diagrams && ls -la && cd ..
       shell: bash
