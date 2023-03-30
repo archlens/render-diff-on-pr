@@ -3,7 +3,7 @@ description: "This will create and upload mt diagrams to a PR"
 inputs:
   config-path:
     description: "Path to the config file"
-    default: "mt_config.json"
+    default: "archlens.json"
   imgur-secret-id:
     description: "The imgur secret key"
     default: "false"
