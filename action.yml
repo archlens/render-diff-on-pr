@@ -32,9 +32,9 @@ runs:
       run: |
         if [ "${{inputs.render-diff}}" == "true" ] 
         then
-          MT_DEBUG="true" architectural-lens render-diff --config-path ${{ inputs.config-path }}
+          MT_DEBUG="true" archlens render-diff --config-path ${{ inputs.config-path }}
         else
-          MT_DEBUG="true" architectural-lens render --config-path ${{ inputs.config-path }}
+          MT_DEBUG="true" archlens render --config-path ${{ inputs.config-path }}
         fi
         cd diagrams && ls -la && cd ..
       shell: bash
