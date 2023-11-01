@@ -7,6 +7,9 @@ inputs:
   render-diff:
     description: "Should it render diff"
     default: "true"
+  BRANCH_NAME: 
+    description: "name for the new orphan branch"
+    required: true
 
 runs:
   using: 'composite'
