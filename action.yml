@@ -43,6 +43,7 @@ runs:
 
     - name: Commit and push images
       run: |
+        git config --global user.name "ArchLens bot"
         git add diagrams/*
         git commit -m "Add diagrams"
         git push origin ${{ inputs.BRANCH_NAME }}
