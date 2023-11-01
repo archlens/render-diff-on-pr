@@ -14,7 +14,6 @@ runs:
     - name: Checkout code
       run: |
         git checkout --orphan archlens_${{ inputs.BRANCH_NAME }}
-        git rm -rf .
         ls -la
       shell: bash
 
