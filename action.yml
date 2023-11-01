@@ -15,6 +15,7 @@ runs:
       run: |
         git checkout --orphan archlens_${{ inputs.BRANCH_NAME }}
         git rm -rf .
+        ls
       shell: bash
 
     - name: Install dependencies
@@ -25,6 +26,7 @@ runs:
 
     - name: Run Architectural Lens
       run: |
+        ls 
         if [ "${{inputs.render-diff}}" == "true" ] 
         then
           MT_DEBUG="true" archlens render-diff --config-path ${{ inputs.config-path }}
