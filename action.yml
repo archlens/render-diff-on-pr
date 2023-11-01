@@ -1,26 +1,21 @@
-name: "Upload Architectural Lens diagram to PR"
-description: "This will create and upload Architectural Lens diagrams to a PR"
+name: Create Orphan Branch, Add Images and Comment
+description: "render diff"
 inputs:
   config-path:
     description: "Path to the config file"
     default: "archlens.json"
-  imgur-secret-id:
-    description: "The imgur secret key"
-    default: "false"
   render-diff:
     description: "Should it render diff"
     default: "true"
 
 runs:
-  using: "composite"
+  using: 'composite'
   steps:
-    - run: echo Running Architectural Lens diagrams on the config ${{ inputs.config-path }}.
+    - name: Checkout code
+      run: |
+        git checkout --orphan archlens_${{ inputs.BRANCH_NAME }}
+        git rm -rf .
       shell: bash
-
-    - name: Set up Python
-      uses: actions/setup-python@v3
-      with:
-        python-version: "3.10"
 
     - name: Install dependencies
       run: |
@@ -39,49 +34,29 @@ runs:
         cd diagrams && ls -la && cd ..
       shell: bash
 
-    - name: Upload to imgur proxy
-      if: ${{ inputs.imgur-secret-id == 'false' }}
-      id: imgur_proxy
+    # - name: Add images to diagrams/ directory
+    #   run: |
+    #     mkdir diagrams
+    #     cp path_to_your_images/* diagrams/
+    #   shell: bash
+
+    - name: Commit and push images
       run: |
-        resultsStr=""
-        for file in diagrams/*; do
-            result=$(curl -s -X POST -F "image=@$file" https://imgurproxy-app-service.azurewebsites.net/upload)
-            resultsStr+="$result<br>"
-        done
-        echo -e $resultsStr
-        echo "MARKDOWN=$resultsStr" >> $GITHUB_OUTPUT
+        git add diagrams/*
+        git commit -m "Add diagrams"
+        git push origin ${{ inputs.BRANCH_NAME }}
       shell: bash
 
+    # - name: Comment on PR with link to new branch
+    #   run: |
+    #     curl \
+    #       -X POST \
+    #       -H "Authorization: token ${{ inputs.GITHUB_TOKEN }}" \
+    #       -H "Accept: application/vnd.github.v3+json" \
+    #       https://api.github.com/repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments \
+    #       -d "{\"body\":\"Done. The new orphan branch with diagrams can be found here.\"}"
+    #   shell: bash
     - uses: mshick/add-pr-comment@v2
-      if: ${{ inputs.imgur-secret-id == 'false' }}
       with:
         message: |
-          ${{ steps.imgur_proxy.outputs.MARKDOWN }}
-
-    - uses: devicons/public-upload-to-imgur@v2.2.2
-      if: ${{ inputs.imgur-secret-id != 'false' }}
-      name: Upload to imgur
-      id: imgur_step
-      with:
-        path: |
-          diagrams/*.png
-        client_id: ${{ inputs.imgur-secret-id }}
-
-    - uses: mshick/add-pr-comment@v2
-      if: ${{ inputs.imgur-secret-id != 'false' }}
-      with:
-        message: |
-          ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[0] }}
-          ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[1] }}
-          ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[2] }}
-          ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[3] }}
-          ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[4] }}
-          ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[5] }}
-          ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[6] }}
-          ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[8] }}
-          ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[9] }}
-          ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[10] }}
-          ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[11] }}
-
-    - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
-      shell: bash
+          "Done! "
