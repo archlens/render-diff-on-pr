@@ -13,7 +13,7 @@ runs:
   steps:
     - name: Checkout code
       run: |
-        git checkout --orphan archlens_${{ inputs.BRANCH_NAME }}
+        git checkout --orphan ${{ inputs.BRANCH_NAME }}
         ls -la
       shell: bash
 
