@@ -66,4 +66,6 @@ runs:
     - uses: mshick/add-pr-comment@v2
       with:
         message: |
-          "Done! "
+          Here are the generated diagrams for this PR: \n
+          https://raw.githubusercontent.com/${{github.repository}}/${{inputs.BRANCH_NAME}}/diagrams/
+          
