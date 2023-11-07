@@ -65,11 +65,12 @@ runs:
 
         # Append the length of the files list to GITHUB_OUTPUT
         echo "FILES_LENGTH=${#files[@]}" >> $GITHUB_OUTPUT
-
-        # Join the array elements with a delimiter (e.g., newline) and append to GITHUB_OUTPUT
+        resultStr = ""
+        # Join the array elements with a delimiter (e.g., newline) and append to GITHUB_OUTPUT 
         for file in "${files[@]}"; do
-          echo "$file" >> $GITHUB_OUTPUT
+          resultStr+="![diff](https://raw.githubusercontent.com/${{github.repository}}/${{ inputs.BRANCH_NAME }}-${{ github.run_id }}/diagrams/$file "diff") "
         done
+        echo "MARKDOWN=$resultStr" >> $GITHUB_OUTPUT
 
       shell: bash
 
@@ -86,8 +87,7 @@ runs:
       with:
         message: |
           Here are the generated diagrams for this PR: \n
-          ${{ steps.commit_images.outputs.FILES_LENGTH }}
-          ${{ steps.commit_images.outputs }}
+          ${{ steps.commit_images.outputs.MARKDOWN }}
           
-          https://raw.githubusercontent.com/${{github.repository}}/${{ inputs.BRANCH_NAME }}-${{ github.run_id }}/diagrams/
+          
           
