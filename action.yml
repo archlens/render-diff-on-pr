@@ -46,6 +46,7 @@ runs:
     #   shell: bash
 
     - name: Commit and push images
+      id: commit_images
       run: |
         git config --global user.name "ArchLens bot"
         git config --global user.email "archlens@users.noreply.github.com"
@@ -58,14 +59,17 @@ runs:
         files=()
 
         # Loop through all files in the specified folder and add them to the array
-        for file in folder/*; do
+        for file in ./*.png; do
           files+=("$file")
         done
 
-        export FILES="${files[*]}"
+        # Append the length of the files list to GITHUB_OUTPUT
+        echo "FILES_LENGTH=${#files[@]}" >> $GITHUB_OUTPUT
 
-        # Export the length of the files list
-        export FILES_LENGTH=${#files[@]}
+        # Join the array elements with a delimiter (e.g., newline) and append to GITHUB_OUTPUT
+        for file in "${files[@]}"; do
+          echo "$file" >> $GITHUB_OUTPUT
+        done
 
       shell: bash
 
@@ -82,7 +86,8 @@ runs:
       with:
         message: |
           Here are the generated diagrams for this PR: \n
-          $FILES_LENGTH
-          $FILES
+          ${{ steps.commit_images.outputs.FILES_LENGTH }}
+          ${{ steps.commit_images.outputs. }}
+          
           https://raw.githubusercontent.com/${{github.repository}}/${{ inputs.BRANCH_NAME }}-${{ github.run_id }}/diagrams/
           
