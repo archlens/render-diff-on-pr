@@ -59,21 +59,19 @@ runs:
         files=()
 
         # Loop through all files in the specified folder and add them to the array
-        for file in ./*.png; do
+        for file in diagrams/*; do
           echo "$file"
           files+=("$file")
         done
-
-        echo "$files"
-
+       
         # Append the length of the files list to GITHUB_OUTPUT
         echo "FILES_LENGTH=${#files[@]}" >> $GITHUB_OUTPUT
-        
+
         resultStr=""
         # Join the array elements with a delimiter (e.g., newline) and append to GITHUB_OUTPUT 
         for file in "${files[@]}"; do
           echo $file
-          resultStr+="![diff](https://raw.githubusercontent.com/${{github.repository}}/${{ inputs.BRANCH_NAME }}-${{ github.run_id }}/diagrams/$file) 
+          resultStr+="![diff](https://raw.githubusercontent.com/${{github.repository}}/${{ inputs.BRANCH_NAME }}-${{ github.run_id }}/diagrams/$file)" 
         done
 
         echo "MARKDOWN=$resultStr" >> $GITHUB_OUTPUT
