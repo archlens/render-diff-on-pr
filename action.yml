@@ -87,7 +87,7 @@ runs:
         message: |
           Here are the generated diagrams for this PR: \n
           ${{ steps.commit_images.outputs.FILES_LENGTH }}
-          ${{ steps.commit_images.outputs. }}
+          ${{ steps.commit_images.outputs }}
           
           https://raw.githubusercontent.com/${{github.repository}}/${{ inputs.BRANCH_NAME }}-${{ github.run_id }}/diagrams/
           
