@@ -71,7 +71,7 @@ runs:
         # Join the array elements with a delimiter (e.g., newline) and append to GITHUB_OUTPUT 
         for file in "${files[@]}"; do
           echo $file
-          resultStr+="![diff](https://raw.githubusercontent.com/${{github.repository}}/${{ inputs.BRANCH_NAME }}-${{ github.run_id }}/diagrams/$file)" 
+          resultStr+="![diff](https://raw.githubusercontent.com/${{github.repository}}/${{ inputs.BRANCH_NAME }}-${{ github.run_id }}/$file)" 
         done
 
         echo "MARKDOWN=$resultStr" >> $GITHUB_OUTPUT
