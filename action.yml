@@ -90,7 +90,7 @@ runs:
     - uses: mshick/add-pr-comment@v2
       with:
         message: |
-          Here are the generated diagrams for this PR: \n
+          Module view diffs:
           ${{ steps.commit_images.outputs.MARKDOWN }}
           
           
