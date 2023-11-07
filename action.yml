@@ -53,6 +53,20 @@ runs:
         git add diagrams/*
         git commit -m "Add diagrams"
         git push origin ${{ inputs.BRANCH_NAME }}-${{github.run_id}}
+
+        # Initialize an empty array
+        files=()
+
+        # Loop through all files in the specified folder and add them to the array
+        for file in folder/*; do
+          files+=("$file")
+        done
+
+        export FILES="${files[*]}"
+
+        # Export the length of the files list
+        export FILES_LENGTH=${#files[@]}
+
       shell: bash
 
     # - name: Comment on PR with link to new branch
@@ -68,5 +82,7 @@ runs:
       with:
         message: |
           Here are the generated diagrams for this PR: \n
+          $FILES_LENGTH
+          $FILES
           https://raw.githubusercontent.com/${{github.repository}}/${{ inputs.BRANCH_NAME }}-${{ github.run_id }}/diagrams/
           
