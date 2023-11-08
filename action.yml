@@ -14,6 +14,12 @@ inputs:
 runs:
   using: 'composite'
   steps:
+
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.10"
+
     - uses: actions/checkout@v3
     - name: Checkout code
       run: |
@@ -24,7 +30,7 @@ runs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -e git+https://github.com/archlens/ArchLens@hotfix/use-public-plantuml-server#egg=architectural-lens
+        pip install git+https://github.com/archlens/ArchLens@master
       shell: bash
 
     - name: Run Architectural Lens
@@ -39,12 +45,6 @@ runs:
         cd diagrams && ls -la && cd ..
       shell: bash
 
-    # - name: Add images to diagrams/ directory
-    #   run: |
-    #     mkdir diagrams
-    #     cp path_to_your_images/* diagrams/
-    #   shell: bash
-
     - name: Commit and push images
       id: commit_images
       run: |
@@ -54,7 +54,6 @@ runs:
         git add diagrams/*
         git commit -m "Add diagrams"
         git push origin ${{ inputs.BRANCH_NAME }}-${{github.run_id}}
-
 
         files=()
 
@@ -72,15 +71,6 @@ runs:
 
       shell: bash
 
-    # - name: Comment on PR with link to new branch
-    #   run: |
-    #     curl \
-    #       -X POST \
-    #       -H "Authorization: token ${{ inputs.GITHUB_TOKEN }}" \
-    #       -H "Accept: application/vnd.github.v3+json" \
-    #       https://api.github.com/repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments \
-    #       -d "{\"body\":\"Done. The new orphan branch with diagrams can be found here.\"}"
-    #   shell: bash
     - uses: mshick/add-pr-comment@v2
       with:
         message: |
