@@ -51,7 +51,7 @@ runs:
         git config --global user.name "ArchLens bot"
         git config --global user.email "archlens@users.noreply.github.com"
         git reset
-        git add diagrams/*
+        git add -f diagrams/*
         git commit -m "Add diagrams"
         git push origin ${{ inputs.BRANCH_NAME }}-${{github.run_id}}
 
