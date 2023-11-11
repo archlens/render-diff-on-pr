@@ -75,8 +75,13 @@ runs:
       run: |
         git config --global user.name "ArchLens bot"
         git config --global user.email "archlens@users.noreply.github.com"
-        git reset
+        git reset 
+
+        echo $UNIQE_NAME
+
         git add -f $UNIQUE_NAME/*
+
+        echo $(git status)
         git commit -m "Add diagrams"
         git push origin ${{ inputs.BRANCH_NAME }}
 
