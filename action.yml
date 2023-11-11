@@ -63,6 +63,7 @@ runs:
         mv $STRIPPED_FOLDER_NAME $UNIQUE_NAME
 
         cd $UNIQUE_NAME
+        ls -la
         for f in * ; do mv -- "$f" "${{ github.run_number }}$f" ; done
         cd ..
       
