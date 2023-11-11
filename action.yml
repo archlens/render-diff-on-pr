@@ -55,8 +55,9 @@ runs:
         echo $DIAGRAMS_FOLDER
 
         STRIPPED_FOLDER_NAME=${DIAGRAMS_FOLDER#./} #remove leading "./"
-        STRIPPED_FOLDER_NAME=${STRIPPED_FOLDER_NAME%/}"  #remove trailing "/"
+        STRIPPED_FOLDER_NAME=${STRIPPED_FOLDER_NAME%/}  #remove trailing "/"
 
+        echo $STRIPPED_FOLDER_NAME
         UNIQUE_NAME=$STRIPPED_FOLDER_NAME-$PULL_REQUEST_ID
         
         mv $STRIPPED_FOLDER_NAME $UNIQUE_NAME
