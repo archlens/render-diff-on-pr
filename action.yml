@@ -23,7 +23,7 @@ runs:
     - uses: actions/checkout@v3
     - name: Checkout code
       run: |
-        git checkout --orphan ${{ inputs.BRANCH_NAME }}-${{github.run_id}}
+        git checkout --orphan ${{ inputs.BRANCH_NAME }}
         ls -la
       shell: bash
 
@@ -42,7 +42,22 @@ runs:
         else
           MT_DEBUG="true" archlens render --config-path ${{ inputs.config-path }}
         fi
-        cd diagrams && ls -la && cd ..
+
+
+        IN=${{github.ref}} 
+        arrIN=(${IN//\// })
+        PULL_REQUEST_ID=${arrIN[2]}
+
+        DIAGRAMS_FOLDER=$(jq -r '.saveLocation' ${{ inputs.config-path }})
+        UNIQUE_NAME=$DIAGRAMS_FOLDER-$PULL_REQUEST_ID
+        
+        mv $DIAGRAMS_FOLDER $UNIQUE_NAME
+
+        cd $UNIQUE_NAME
+        for f in * ; do mv -- "$f" "${{ github.run_number }}$f" ; done
+        cd ..
+      
+
       shell: bash
 
     - name: Commit and push images
@@ -53,18 +68,18 @@ runs:
         git reset
         git add -f diagrams/*
         git commit -m "Add diagrams"
-        git push origin ${{ inputs.BRANCH_NAME }}-${{github.run_id}}
+        git push origin ${{ inputs.BRANCH_NAME }}
 
         files=()
 
-        for file in diagrams/*; do
+        for file in $UNIQUE_NAME/*; do
           files+=("$file")
         done
 
         resultStr=""
 
         for file in "${files[@]}"; do
-          resultStr+="![diff](https://raw.githubusercontent.com/${{github.repository}}/${{ inputs.BRANCH_NAME }}-${{ github.run_id }}/$file)" 
+          resultStr+="![diff](https://raw.githubusercontent.com/${{github.repository}}/${{ inputs.BRANCH_NAME }}/$file)" 
         done
 
         echo "MARKDOWN=$resultStr" >> $GITHUB_OUTPUT
