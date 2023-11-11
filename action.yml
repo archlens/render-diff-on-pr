@@ -66,8 +66,6 @@ runs:
         ls -la
         for f in * ; do mv -- "$f" "${{ github.run_number }}$f" ; done
         cd ..
-      
-
       shell: bash
 
     - name: Commit and push images
@@ -98,8 +96,8 @@ runs:
         done
 
         echo "MARKDOWN=$resultStr" >> $GITHUB_OUTPUT
-
       shell: bash
+      
     - uses: mshick/add-pr-comment@v2
       with:
         message: |
