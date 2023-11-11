@@ -48,10 +48,16 @@ runs:
         arrIN=(${IN//\// })
         PULL_REQUEST_ID=${arrIN[2]}
 
-        DIAGRAMS_FOLDER=$(jq -r '.saveLocation' ${{ inputs.config-path }})
-        UNIQUE_NAME=$DIAGRAMS_FOLDER-$PULL_REQUEST_ID
+
         
-        mv $DIAGRAMS_FOLDER $UNIQUE_NAME
+        DIAGRAMS_FOLDER=$(jq -r '.saveLocation' ${{ inputs.config-path }})
+
+        STRIPPED_FOLDER_NAME="${${{ inputs.config-path }}#./}" #remove leading "./"
+        STRIPPED_FOLDER_NAME="${$STRIPPED_FOLDER_NAME%/}"  #remove trailing "/"
+
+        UNIQUE_NAME=$STRIPPED_FOLDER_NAME-$PULL_REQUEST_ID
+        
+        mv $STRIPPED_FOLDER_NAME $UNIQUE_NAME
 
         cd $UNIQUE_NAME
         for f in * ; do mv -- "$f" "${{ github.run_number }}$f" ; done
