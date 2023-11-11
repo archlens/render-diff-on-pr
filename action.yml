@@ -52,7 +52,7 @@ runs:
         
         DIAGRAMS_FOLDER=$(jq -r '.saveLocation' ${{ inputs.config-path }})
 
-        STRIPPED_FOLDER_NAME="${${{ inputs.config-path }}#./}" #remove leading "./"
+        STRIPPED_FOLDER_NAME="${$DIAGRAMS_FOLDER#./}" #remove leading "./"
         STRIPPED_FOLDER_NAME="${$STRIPPED_FOLDER_NAME%/}"  #remove trailing "/"
 
         UNIQUE_NAME=$STRIPPED_FOLDER_NAME-$PULL_REQUEST_ID
