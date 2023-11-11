@@ -100,7 +100,6 @@ runs:
         echo "MARKDOWN=$resultStr" >> $GITHUB_OUTPUT
 
       shell: bash
-
     - uses: mshick/add-pr-comment@v2
       with:
         message: |
