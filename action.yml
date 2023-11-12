@@ -73,6 +73,7 @@ runs:
         git add -f .
 
         git commit -m "Add diagrams"
+        git config pull.rebase false
         git pull origin ${{ inputs.BRANCH_NAME }}
         git push origin ${{ inputs.BRANCH_NAME }}
 
