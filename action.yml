@@ -72,7 +72,7 @@ runs:
         git reset 
 
         ls -la
-        cd -- "$UNIQUE_NAME"
+        CD $(echo $UNIQUE_NAME | tr -d '\r')
         ls -la
         git add -f .
 
