@@ -64,7 +64,6 @@ runs:
         for f in * ; do mv -- "$f" "${{ github.run_number }}-$f" ; done
 
         echo $UNIQUE_NAME
-        git checkout -b ${{ inputs.BRANCH_NAME }}
         git config --global user.name "ArchLens bot"
         git config --global user.email "archlens@users.noreply.github.com"
 
