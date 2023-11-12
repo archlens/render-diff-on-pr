@@ -65,6 +65,7 @@ runs:
         cd $UNIQUE_NAME
         ls -la
         for f in * ; do mv -- "$f" "${{ github.run_number }}$f" ; done
+        ls -la
         cd ..
       shell: bash
 
@@ -74,10 +75,9 @@ runs:
         git config --global user.name "ArchLens bot"
         git config --global user.email "archlens@users.noreply.github.com"
         git reset 
-        git pull
         echo $UNIQE_NAME
 
-        git add -f $UNIQUE_NAME/*
+        git add -f "${UNIQUE_NAME}/*""
 
         git commit -m "Add diagrams"
         git push origin ${{ inputs.BRANCH_NAME }}
