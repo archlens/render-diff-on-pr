@@ -73,7 +73,7 @@ runs:
 
 
         ls -la
-        cd $UNIQUE_NAME
+        cd -- "$UNIQUE_NAME"
         git add -f .
 
         git commit -m "Add diagrams"
