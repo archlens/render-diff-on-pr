@@ -44,39 +44,38 @@ runs:
           MT_DEBUG="true" archlens render --config-path ${{ inputs.config-path }}
         fi
 
-
+        # get the pull request ID from the ref
         IN=${{github.ref}} 
         arrIN=(${IN//\// })
         PULL_REQUEST_ID=${arrIN[2]}
-
-
         
+        # read the saveLocation from the json config (e.g. "./archlens.json/")
         DIAGRAMS_FOLDER=$(jq -r '.saveLocation' ${{ inputs.config-path }})
 
-
+        # save a stripped version as well
         STRIPPED_FOLDER_NAME=${DIAGRAMS_FOLDER#./} #remove leading "./"
         STRIPPED_FOLDER_NAME=${STRIPPED_FOLDER_NAME%/}  #remove trailing "/"
 
+        # create a unique folder name (concat pull request ID)
         UNIQUE_NAME=$STRIPPED_FOLDER_NAME-$PULL_REQUEST_ID
         
+        # rename the savelocation to our unique name
         mv $STRIPPED_FOLDER_NAME $UNIQUE_NAME
 
+        # prefix all the png files with the workflow run_number
         cd $UNIQUE_NAME
         for f in * ; do mv -- "$f" "${{ github.run_number }}-$f" ; done
 
-        echo $UNIQUE_NAME
         git reset
         git config --global user.name "ArchLens bot"
         git config --global user.email "archlens@users.noreply.github.com"
-
-
-        ls -la
-
         git add -f .
         cd ..
         git clean -d -f .
         git commit -m "Add diagrams"
         git config pull.rebase false
+
+        # pull from remote before push (fail silently, if no remote exists its fine)
         git pull origin ${{ inputs.BRANCH_NAME }} --allow-unrelated-histories || true
         git push origin ${{ inputs.BRANCH_NAME }}
 
@@ -89,13 +88,15 @@ runs:
 
         resultStr=""
 
+        # for each file, we append the markdown for showing the png to a string
         for file in "${files[@]}"; do
           if (( ${{ github.run_number }} == "${file%%-*}" ))
           then
             resultStr+="![diff](https://raw.githubusercontent.com/${{github.repository}}/${{ inputs.BRANCH_NAME }}/$UNIQUE_NAME/$file)" 
           fi
         done
-        echo $resultStr
+
+        # output the full markdown
         echo "MARKDOWN=$resultStr" >> $GITHUB_OUTPUT
       shell: bash
 
