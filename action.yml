@@ -74,7 +74,7 @@ runs:
 
         git commit -m "Add diagrams"
         git config pull.rebase false
-        git pull origin ${{ inputs.BRANCH_NAME }}
+        git pull origin ${{ inputs.BRANCH_NAME }} --allow-unrelated-histories
         git push origin ${{ inputs.BRANCH_NAME }}
 
         files=()
