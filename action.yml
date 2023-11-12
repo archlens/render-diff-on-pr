@@ -23,6 +23,7 @@ runs:
     - uses: actions/checkout@v3
     - name: Checkout code
       run: |
+        git pull
         git checkout --orphan ${{ inputs.BRANCH_NAME }}
         ls -la
       shell: bash
@@ -69,9 +70,7 @@ runs:
       run: |
         git config --global user.name "ArchLens bot"
         git config --global user.email "archlens@users.noreply.github.com"
-        git pull
         git reset 
-
 
         ls -la
         cd -- "$UNIQUE_NAME"
