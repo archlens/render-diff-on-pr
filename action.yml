@@ -77,7 +77,7 @@ runs:
         git reset 
         echo $UNIQE_NAME
 
-        echo $UNIQUE_NAME'/*'
+        echo ${UNIQUE_NAME}'/*'
         echo $UNIQUE_NAME'/*'
         echo $UNIQUE_NAME'/*'
 
