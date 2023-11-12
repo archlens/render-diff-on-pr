@@ -72,7 +72,8 @@ runs:
         git reset 
 
         ls -la
-        cd -- "$UNIQUE_NAME"
+        cd -- "${UNIQUE_NAME}/"
+        ls -la
         git add -f .
 
         git commit -m "Add diagrams"
