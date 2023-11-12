@@ -62,12 +62,8 @@ runs:
 
         cd $UNIQUE_NAME
         for f in * ; do mv -- "$f" "${{ github.run_number }}-$f" ; done
-      shell: bash
 
-    - name: Commit and push images
-      id: commit_images
-      working-directory: ./$UNIQUE_NAME
-      run: |
+        echo $UNIQUE_NAME
         git config --global user.name "ArchLens bot"
         git config --global user.email "archlens@users.noreply.github.com"
         git reset 
