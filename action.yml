@@ -34,6 +34,7 @@ runs:
       shell: bash
 
     - name: Run Architectural Lens
+      id: run_archlens
       run: |
         ls -la
         if [ "${{inputs.render-diff}}" == "true" ] 
@@ -78,6 +79,7 @@ runs:
         git config pull.rebase false
         git pull origin ${{ inputs.BRANCH_NAME }} --allow-unrelated-histories
         git push origin ${{ inputs.BRANCH_NAME }}
+
         cd $UNIQUE_NAME
         files=()
 
@@ -90,7 +92,7 @@ runs:
         for file in "${files[@]}"; do
           resultStr+="![diff](https://raw.githubusercontent.com/${{github.repository}}/${{ inputs.BRANCH_NAME }}/$file)" 
         done
-
+        echo $resultStr
         echo "MARKDOWN=$resultStr" >> $GITHUB_OUTPUT
       shell: bash
 
@@ -98,7 +100,7 @@ runs:
       with:
         message: |
           Module view diffs:
-          ${{ steps.commit_images.outputs.MARKDOWN }}
+          ${{ steps.run_archlens.outputs.MARKDOWN }}
           
           
           
