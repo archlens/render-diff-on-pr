@@ -90,7 +90,7 @@ runs:
         resultStr=""
 
         for file in "${files[@]}"; do
-          if (( $PULL_REQUEST_ID == "${file%%-*}"
+          if (( $PULL_REQUEST_ID == "${file%%-*}" ))
           then
             resultStr+="![diff](https://raw.githubusercontent.com/${{github.repository}}/${{ inputs.BRANCH_NAME }}/$UNIQUE_NAME/$file)" 
           fi
