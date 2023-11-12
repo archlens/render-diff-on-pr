@@ -72,12 +72,13 @@ runs:
         ls -la
 
         git add -f .
+        cd ..
         git clean -d -f .
         git commit -m "Add diagrams"
         git config pull.rebase false
         git pull origin ${{ inputs.BRANCH_NAME }} --allow-unrelated-histories
         git push origin ${{ inputs.BRANCH_NAME }}
-
+        cd $UNIQUE_NAME
         files=()
 
         for file in *; do
