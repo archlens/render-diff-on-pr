@@ -90,7 +90,8 @@ runs:
         resultStr=""
 
         for file in "${files[@]}"; do
-          resultStr+="![diff](https://raw.githubusercontent.com/${{github.repository}}/${{ inputs.BRANCH_NAME }}/$file)" 
+          if (( $PULL_REQUEST_ID == "${file%%-*}"
+          resultStr+="![diff](https://raw.githubusercontent.com/${{github.repository}}/${{ inputs.BRANCH_NAME }}/$UNIQUE_NAME/$file)" 
         done
         echo $resultStr
         echo "MARKDOWN=$resultStr" >> $GITHUB_OUTPUT
