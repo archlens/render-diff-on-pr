@@ -90,7 +90,7 @@ runs:
         resultStr=""
 
         for file in "${files[@]}"; do
-          if (( {{ github.run_number }} == "${file%%-*}" ))
+          if (( ${{ github.run_number }} == "${file%%-*}" ))
           then
             resultStr+="![diff](https://raw.githubusercontent.com/${{github.repository}}/${{ inputs.BRANCH_NAME }}/$UNIQUE_NAME/$file)" 
           fi
