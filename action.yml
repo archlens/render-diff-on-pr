@@ -64,6 +64,7 @@ runs:
         for f in * ; do mv -- "$f" "${{ github.run_number }}-$f" ; done
 
         echo $UNIQUE_NAME
+        git reset
         git config --global user.name "ArchLens bot"
         git config --global user.email "archlens@users.noreply.github.com"
 
