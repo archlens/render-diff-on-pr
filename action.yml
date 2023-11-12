@@ -74,7 +74,7 @@ runs:
         git add -f .
 
         git commit -m "Add diagrams"
-        git pull ${{ inputs.BRANCH_NAME }} ${{ inputs.BRANCH_NAME }}
+        git pull origin ${{ inputs.BRANCH_NAME }}
         git push origin ${{ inputs.BRANCH_NAME }}
 
         files=()
