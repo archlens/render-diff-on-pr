@@ -60,8 +60,6 @@ runs:
         UNIQUE_NAME=$STRIPPED_FOLDER_NAME-$PULL_REQUEST_ID
         
         # rename the savelocation to our unique name
-        ls -l diagrams
-        ls -l
         echo mv $STRIPPED_FOLDER_NAME $UNIQUE_NAME
         mv $STRIPPED_FOLDER_NAME $UNIQUE_NAME
 
